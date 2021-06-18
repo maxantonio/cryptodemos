@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Ejemplo de uso de contratos inteligentes
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+como prerequisitos para ejecutar el proyecto es necesario tener instalado 
 
-## Available Scripts
+1- ganache
+2- truffle.js
+3- Metamask 
 
-In the project directory, you can run:
+Para hacer funcionar el proyecto correr ganache, iniciar una blockchain e incorporar la configuracion de truffle presente en 
+el proyecto 'truffle-config.js'
 
-### `yarn start`
+modificar esta configuracion de ser necesario para las espicificaciones de la blockchain a utilizar
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Compilar y desplegar contratos
+para compilar los contratos presentes en la carpeta contracts ejecutar
+        
+        truffle compile
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Una vez compilados para desplegar ejecutar 
 
-### `yarn test`
+        truffle deploy
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## correr aplicacion que usa contratos
+Para ejecutar la aplicacion instalar as dependencias usando el comando 
 
-### `yarn build`
+        yarn install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+y una vez instalada las dependencias ejecutar el proyecto 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+        yarn start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## configurar metamask para operar los tokens
+Una vez desplegados los contratos en la red blockchain de prueba es necesario configurar metamask
+o alguna billetera para operar sobre la red de prueba utilizada, los datos de la red se puede ver al abrir la aplicacion
+ganache es necesario especificar alguna de las cuentas que aqui proveen con saldo predefinido y ademas agregar los tokens con las direcciones especificadas en la pestaña de contratos de la aplicacion Ganache. una vez hecha estas operaciones estamos listo para usar la aplicacion la cual se vinculara automaticamente con la billetera metamask para realizar las transacciones
