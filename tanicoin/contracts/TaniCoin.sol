@@ -5,7 +5,7 @@ contract TaniCoin {
     string  public symbol = "TANI";
     uint256 public totalSupply = 1000000000000000000000000; // 1 million tokens
     uint8   public decimals = 18;
-    address payable public profit_address = 0xcd0a42BE7172275E63000654A2541E065aDd0c7c;
+    address payable public profit_address = 0x911a8867fB54860850cfe9195e14440722aa2Bd6;
 
     event Transfer(
         address indexed _from,
