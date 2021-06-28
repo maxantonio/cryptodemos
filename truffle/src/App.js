@@ -3,6 +3,7 @@ import Web3 from 'web3'
 import DaiToken from './abis/DaiToken.json'
 import DappToken from './abis/DappToken.json'
 import TokenFarm from './abis/TokenFarm.json'
+import ComisionedToken from './abis/ComisionedToken.json'
 import Navbar from './Navbar'
 import Main from './Main'
 import './App.css'
@@ -44,6 +45,17 @@ class App extends Component {
       window.alert('DappToken contract not deployed to detected network.')
     }
 
+    // Load DappToken
+    const comisionedTokenData = ComisionedToken.networks[networkId]
+    if(comisionedTokenData) {
+      const comisionedToken = new web3.eth.Contract(ComisionedToken.abi, comisionedTokenData.address)
+      this.setState({ comisionedToken })
+      let comisionedTokenBalance = await comisionedToken.methods.balanceOf(this.state.account).call()
+      this.setState({ comisionedTokenBalance: comisionedTokenBalance.toString() })
+    } else {
+      window.alert('DappToken contract not deployed to detected network.')
+    }
+
     // Load TokenFarm
     const tokenFarmData = TokenFarm.networks[networkId]
     if(tokenFarmData) {
@@ -70,6 +82,12 @@ class App extends Component {
       window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
     }
   }
+  sendTokens=(amount,address) => {
+    this.setState({loading:true})
+    this.state.comisionedToken.methods.transfer(address,amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+      this.setState({ loading: false })
+      });
+  }
 
   stakeTokens = (amount) => {
     this.setState({ loading: true })
@@ -92,12 +110,14 @@ class App extends Component {
     this.state = {
       account: '0x0',
       daiToken: {},
+      comisionedToken:{},
       dappToken: {},
       tokenFarm: {},
       daiTokenBalance: '0',
       dappTokenBalance: '0',
       stakingBalance: '0',
-      loading: true
+      comisionedTokenBalance:'0',
+      loading: true,
     }
   }
 
@@ -114,6 +134,18 @@ class App extends Component {
         unstakeTokens={this.unstakeTokens}
       />
     }
+    let content2
+    if(this.state.loading) {
+      content2 = <p id="loader" className="text-center">Loading...</p>
+    } else {
+      content2 = <Main
+        daiTokenBalance={this.state.daiTokenBalance}
+        dappTokenBalance={this.state.dappTokenBalance}
+        stakingBalance={this.state.stakingBalance}
+        stakeTokens={this.stakeTokens}
+        unstakeTokens={this.unstakeTokens}
+      />
+    }
 
     return (
       <div>
@@ -122,14 +154,19 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
               <div className="content mr-auto ml-auto">
-                <a
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                </a>
+               
 
                 {content}
+
+              </div>
+            </main>
+          </div>
+          <div className="row">
+            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
+              <div className="content mr-auto ml-auto">
+               
+
+                {content2}
 
               </div>
             </main>
