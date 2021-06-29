@@ -15,7 +15,7 @@ Obtener una dirección de alguna de las cuentas de Ganache,
 excepto la 0 y la 1, sobreescribir la variable "profit_address"
 en /contracts/TaniCoin.sol
 
-![alt text](src/static/img/accounts.jpg "Ganache - Cuentas")
+![alt text](src/assets/img/accounts.jpg "Ganache - Cuentas")
 
 Instalar dependencias:
         
@@ -32,3 +32,18 @@ Desplegar contratos:
 Ejecutar pruebas: 
 
         truffle test
+        
+##### App
+
+Instalar dependencias:
+    
+    npm install
+
+Compila y recarga en caliente para el desarrollo:
+
+    npm run serve
+
+Compila y minimiza para producción:
+
+    npm run build
+
