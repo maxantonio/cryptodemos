@@ -6,6 +6,7 @@ import TokenFarm from './abis/TokenFarm.json'
 import ComisionedToken from './abis/ComisionedToken.json'
 import Navbar from './Navbar'
 import Main from './Main'
+import Holder from './Holder'
 import './App.css'
 
 class App extends Component {
@@ -46,12 +47,16 @@ class App extends Component {
     }
 
     // Load DappToken
-    const comisionedTokenData = ComisionedToken.networks[networkId]
+    const comisionedTokenData = ComisionedToken.networks[networkId];
+    const comissionAddress = '0x833D98eD6F1e05238a7861F1F69D9b4EF1b00373';
     if(comisionedTokenData) {
       const comisionedToken = new web3.eth.Contract(ComisionedToken.abi, comisionedTokenData.address)
       this.setState({ comisionedToken })
       let comisionedTokenBalance = await comisionedToken.methods.balanceOf(this.state.account).call()
-      this.setState({ comisionedTokenBalance: comisionedTokenBalance.toString() })
+      let comisionedSaved = await comisionedToken.methods.balanceOf(comissionAddress).call()
+      this.setState({ comisionedTokenBalance: comisionedTokenBalance.toString()});
+      console.log("BALANCE 1",comisionedSaved)
+      this.setState({comisionedSaved: comisionedSaved.toString()});
     } else {
       window.alert('DappToken contract not deployed to detected network.')
     }
@@ -117,14 +122,17 @@ class App extends Component {
       dappTokenBalance: '0',
       stakingBalance: '0',
       comisionedTokenBalance:'0',
+      comisionedSaved:'0',
       loading: true,
     }
   }
 
   render() {
-    let content
+    let content;
+    let content2;
     if(this.state.loading) {
-      content = <p id="loader" className="text-center">Loading...</p>
+      content = <p id="loader" className="text-center">Loading...</p>;
+      content2 = <p id="holder" className="text-center">Conecting to wallet...</p>;
     } else {
       content = <Main
         daiTokenBalance={this.state.daiTokenBalance}
@@ -133,20 +141,12 @@ class App extends Component {
         stakeTokens={this.stakeTokens}
         unstakeTokens={this.unstakeTokens}
       />
-    }
-    let content2
-    if(this.state.loading) {
-      content2 = <p id="loader" className="text-center">Loading...</p>
-    } else {
-      content2 = <Main
-        daiTokenBalance={this.state.daiTokenBalance}
-        dappTokenBalance={this.state.dappTokenBalance}
-        stakingBalance={this.state.stakingBalance}
-        stakeTokens={this.stakeTokens}
-        unstakeTokens={this.unstakeTokens}
+      content2 = <Holder
+        sendTokens={this.sendTokens}
+        comisionedSaved={this.state.comisionedSaved}
+        currentBalance={this.state.comisionedTokenBalance}
       />
     }
-
     return (
       <div>
         <Navbar account={this.state.account} />
