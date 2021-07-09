@@ -1,180 +1,527 @@
-import React, { Component } from 'react'
-import Web3 from 'web3'
-import DaiToken from './abis/DaiToken.json'
-import DappToken from './abis/DappToken.json'
-import TokenFarm from './abis/TokenFarm.json'
-import ComisionedToken from './abis/ComisionedToken.json'
-import Navbar from './Navbar'
-import Main from './Main'
-import Holder from './Holder'
-import './App.css'
+import React, { useState, useEffect, useRef } from 'react';
+import classNames from 'classnames';
+import { Route, useHistory } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 
-class App extends Component {
+import { AppTopbar } from './AppTopbar';
+import { AppFooter } from './AppFooter';
+import { AppMenu } from './AppMenu';
+import { AppProfile } from './AppProfile';
+import { AppConfig } from './AppConfig';
 
-  async componentWillMount() {
-    await this.loadWeb3()
-    await this.loadBlockchainData()
-  }
+import { Dashboard } from './components/Dashboard';
 
-  async loadBlockchainData() {
-    const web3 = window.web3
 
-    const accounts = await web3.eth.getAccounts()
-    this.setState({ account: accounts[0] })
+import { Calendar } from './pages/Calendar';
+import { Crud } from './pages/Crud';
+import { EmptyPage } from './pages/EmptyPage';
 
-    const networkId = await web3.eth.net.getId()
+import { DisplayDemo } from './utilities/DisplayDemo';
+import { ElevationDemo } from './utilities/ElevationDemo';
+import { FlexBoxDemo } from './utilities/FlexBoxDemo';
+import { GridDemo } from './utilities/GridDemo';
+import { IconsDemo } from './utilities/IconsDemo';
+import { SpacingDemo } from './utilities/SpacingDemo';
+import { TextDemo } from './utilities/TextDemo';
+import { TypographyDemo } from './utilities/TypographyDemo';
+import { TimelineDemo } from './utilities/TimelineDemo';
 
-    // Load DaiToken
-    const daiTokenData = DaiToken.networks[networkId]
-    if(daiTokenData) {
-      const daiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address)
-      this.setState({ daiToken })
-      let daiTokenBalance = await daiToken.methods.balanceOf(this.state.account).call()
-      this.setState({ daiTokenBalance: daiTokenBalance.toString() })
-    } else {
-      window.alert('DaiToken contract not deployed to detected network.')
+import PrimeReact from 'primereact/api';
+
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
+import 'prismjs/themes/prism-coy.css';
+import '@fullcalendar/core/main.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fullcalendar/timegrid/main.css';
+import './layout/flags/flags.css';
+import './layout/layout.scss';
+import './App.scss';
+import UsuariosData from './components/Configuracion/UsuariosData';
+import Empresas from './components/Configuracion/Empresas';
+import EstablecimientosData from './components/Configuracion/EstablecimientosData';
+import PuntosEmisionsData from './components/Configuracion/PuntosEmisionData';
+
+import Login from './components/Login'
+
+import ClientesData from './components/Cartera/ClientesData';
+import ProveedorsData from './components/Cartera/ProveedoresData';
+import TransportistasData from './components/Cartera/Transportistas';
+import ProductosData from './components/Inventario/ProductoData';
+import PrestamoData from './components/Prestamos/PrestamosData';
+import AbonosData from './components/Prestamos/AbonosData';
+import CuentasData from './components/Banca/CuentasData';
+import DiarioContablesData from './components/Banca/DiarioContableData';
+import HistorialFacturasData from './components/Documentos/HistorialFacturaData';
+import OperacionesData from './components/Banca/OperacionesData';
+import FacturasData from './components/Abonos/FacturasData';
+
+function setToken(userToken) {
+    console.log("saving token on session storage",userToken)
+    sessionStorage.setItem('token', JSON.stringify(userToken));
+}
+
+function getToken() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  console.log("llamando al gettoken",userToken,"EL QE",userToken)
+  return userToken
+}
+
+
+const App = () => {
+
+    const [layoutMode, setLayoutMode] = useState('static');
+    const [layoutColorMode, setLayoutColorMode] = useState('dark')
+    const [staticMenuInactive, setStaticMenuInactive] = useState(false);
+    const [overlayMenuActive, setOverlayMenuActive] = useState(false);
+    const [mobileMenuActive, setMobileMenuActive] = useState(false);
+    const [inputStyle, setInputStyle] = useState('outlined');
+    const [ripple, setRipple] = useState(false);
+    const [dumi, setDumi] = useState(null);
+    const sidebar = useRef();
+
+    const token = getToken();
+
+    const setCustomToken= (t) =>{
+        setToken(t)
+        setDumi(t)  
+        
     }
 
-    // Load DappToken
-    const dappTokenData = DappToken.networks[networkId]
-    if(dappTokenData) {
-      const dappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address)
-      this.setState({ dappToken })
-      let dappTokenBalance = await dappToken.methods.balanceOf(this.state.account).call()
-      this.setState({ dappTokenBalance: dappTokenBalance.toString() })
-    } else {
-      window.alert('DappToken contract not deployed to detected network.')
+    const history = useHistory();
+
+    let menuClick = false;
+
+    useEffect(() => {
+        if (mobileMenuActive) {
+            addClass(document.body, 'body-overflow-hidden');
+        }
+        else {
+            removeClass(document.body, 'body-overflow-hidden');
+        }
+    }, [mobileMenuActive]);
+
+    const onInputStyleChange = (inputStyle) => {
+        setInputStyle(inputStyle);
     }
 
-    // Load DappToken
-    const comisionedTokenData = ComisionedToken.networks[networkId];
-    const comissionAddress = '0x833D98eD6F1e05238a7861F1F69D9b4EF1b00373';
-    if(comisionedTokenData) {
-      const comisionedToken = new web3.eth.Contract(ComisionedToken.abi, comisionedTokenData.address)
-      this.setState({ comisionedToken })
-      let comisionedTokenBalance = await comisionedToken.methods.balanceOf(this.state.account).call()
-      let comisionedSaved = await comisionedToken.methods.balanceOf(comissionAddress).call()
-      this.setState({ comisionedTokenBalance: comisionedTokenBalance.toString()});
-      console.log("BALANCE 1",comisionedSaved)
-      this.setState({comisionedSaved: comisionedSaved.toString()});
-    } else {
-      window.alert('DappToken contract not deployed to detected network.')
+    const onRipple = (e) => {
+        PrimeReact.ripple = e.value;
+        setRipple(e.value)
     }
 
-    // Load TokenFarm
-    const tokenFarmData = TokenFarm.networks[networkId]
-    if(tokenFarmData) {
-      const tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address)
-      this.setState({ tokenFarm })
-      let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call()
-      this.setState({ stakingBalance: stakingBalance.toString() })
-    } else {
-      window.alert('TokenFarm contract not deployed to detected network.')
+    const onLayoutModeChange = (mode) => {
+        setLayoutMode(mode)
     }
 
-    this.setState({ loading: false })
-  }
-
-  async loadWeb3() {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum)
-      await window.ethereum.enable()
+    const onColorModeChange = (mode) => {
+        setLayoutColorMode(mode)
     }
-    else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider)
-    }
-    else {
-      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-    }
-  }
-  sendTokens=(amount,address) => {
-    this.setState({loading:true})
-    this.state.comisionedToken.methods.transfer(address,amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.setState({ loading: false })
-      });
-  }
 
-  stakeTokens = (amount) => {
-    this.setState({ loading: true })
-    this.state.daiToken.methods.approve(this.state.tokenFarm._address, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.state.tokenFarm.methods.stakeTokens(amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-        this.setState({ loading: false })
-      })
-    })
-  }
-
-  unstakeTokens = (amount) => {
-    this.setState({ loading: true })
-    this.state.tokenFarm.methods.unstakeTokens().send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.setState({ loading: false })
-    })
-  }
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      account: '0x0',
-      daiToken: {},
-      comisionedToken:{},
-      dappToken: {},
-      tokenFarm: {},
-      daiTokenBalance: '0',
-      dappTokenBalance: '0',
-      stakingBalance: '0',
-      comisionedTokenBalance:'0',
-      comisionedSaved:'0',
-      loading: true,
+    const onWrapperClick = (event) => {
+        if (!menuClick) {
+            setOverlayMenuActive(false);
+            setMobileMenuActive(false);
+        }
+        menuClick = false;
     }
-  }
 
-  render() {
-    let content;
-    let content2;
-    if(this.state.loading) {
-      content = <p id="loader" className="text-center">Loading...</p>;
-      content2 = <p id="holder" className="text-center">Conecting to wallet...</p>;
-    } else {
-      content = <Main
-        daiTokenBalance={this.state.daiTokenBalance}
-        dappTokenBalance={this.state.dappTokenBalance}
-        stakingBalance={this.state.stakingBalance}
-        stakeTokens={this.stakeTokens}
-        unstakeTokens={this.unstakeTokens}
-      />
-      content2 = <Holder
-        sendTokens={this.sendTokens}
-        comisionedSaved={this.state.comisionedSaved}
-        currentBalance={this.state.comisionedTokenBalance}
-      />
+    const onToggleMenu = (event) => {
+        menuClick = true;
+
+        if (isDesktop()) {
+            if (layoutMode === 'overlay') {
+                setOverlayMenuActive(prevState => !prevState);
+            }
+            else if (layoutMode === 'static') {
+                setStaticMenuInactive(prevState => !prevState);
+            }
+        }
+        else {
+            setMobileMenuActive(prevState => !prevState);
+        }
+        event.preventDefault();
     }
+
+    const onSidebarClick = () => {
+        menuClick = true;
+    }
+
+    const onMenuItemClick = (event) => {
+        if (!event.item.items) {
+            setOverlayMenuActive(false);
+            setMobileMenuActive(false);
+        }
+    }
+
+    const menu = [
+        {
+           label:'Documentos Electronicos',
+           icon:'pi pi-fw pi-file',           
+           items:[
+              {
+                 label:'Emisión / Ingreso',
+               //   icon:'pi pi-fw pi-plus',
+               icon: 'pi pi-fw',
+                 items:[
+                    {
+                       label:'Factura',
+                       icon:'pi pi-fw pi-file',
+                       url: '/facturas'
+                    },
+                    {
+                     label:'Guia de Remisión',
+                     icon:'pi pi-fw pi-file',
+                     url: '/remision'
+                  },
+                  {
+                     label:'Retención',
+                     icon:'pi pi-fw pi-file'
+                  },
+                  {
+                     label:'Nota de crédito',
+                     icon:'pi pi-fw pi-file'
+                  },
+                  {
+                     label:'Nota de débito',
+                     icon:'pi pi-fw pi-file'
+                  },
+                  {
+                     label:'Retencion Recibida',
+                     icon:'pi pi-fw pi-file'
+                  },
+                  {
+                     label:'Cotización',
+                     icon:'pi pi-fw pi-file'
+                  },
+                  {
+                     label:'Liquidación de Compras',
+                     icon:'pi pi-fw pi-file'
+                  },
+                  {
+                     label:'Factura de Compra',
+                     icon:'pi pi-fw pi-file'
+                  },
+                  {
+                     label:'Factura de Gasto',
+                     icon:'pi pi-fw pi-file'
+                  }
+                 ]
+              },
+              {
+               label:'Historial',
+             //   icon:'pi pi-fw pi-plus',
+             icon: 'pi pi-fw',
+               items:[
+                  {
+                     label:'Factura',
+                     icon:'pi pi-fw pi-clock',
+                     to:'/historialFacturas'
+                  },
+                  {
+                   label:'Guia de Remisión',
+                   icon:'pi pi-fw pi-clock'
+                },
+                {
+                   label:'Retención',
+                   icon:'pi pi-fw pi-clock'
+                },
+                {
+                   label:'Nota de crédito',
+                   icon:'pi pi-fw pi-clock'
+                },
+                {
+                   label:'Nota de débito',
+                   icon:'pi pi-fw pi-clock'
+                },
+                {
+                   label:'Retencion Recibida',
+                   icon:'pi pi-fw pi-clock'
+                },
+                {
+                   label:'Cotización',
+                   icon:'pi pi-fw pi-clock'
+                },
+                {
+                   label:'Liquidación de Compras',
+                   icon:'pi pi-fw pi-clock'
+                },
+                {
+                   label:'Factura de Compra',
+                   icon:'pi pi-fw pi-clock'
+                },
+                {
+                   label:'Factura de Gasto',
+                   icon:'pi pi-fw pi-clock'
+                }
+               ]
+            }
+           ]
+        },
+        {
+           label:'Abonos',
+           icon:'pi pi-fw pi-money-bill',
+           items:[
+              {
+                 label:'Factura',
+                 icon:'pi pi-fw pi-file',
+                 to:'facturas'
+              },
+              {
+                 label:'Nota de Crédito',
+                 icon:'pi pi-fw pi-file'
+              },
+              {
+                 label:'Nota de Débito',
+                 icon:'pi pi-fw pi-file'
+              },
+              {
+                 label:'Facturas de Compras',
+                 icon:'pi pi-fw pi-file'
+              },
+              {
+               label:'Liquidaciones de Compras',
+               icon:'pi pi-fw pi-file'
+               },
+               {
+                  label:'Facturas de Gastos',
+                  icon:'pi pi-fw pi-file'
+               }
+           ]
+        },
+        {
+           label:'Banca',
+           icon:'pi pi-fw pi-wallet',
+           items:[
+              {
+                 label:'Cuentas',
+                 icon:'pi pi-fw pi-wallet',
+                 to:'/cuentas'
+              },
+              {
+                 label:'Operaciones Bancarias',
+                 icon:'pi pi-fw pi-sort-numeric-up-alt',
+                 to:'/operaciones'
+              },
+              {
+                label:'Diario Contable',
+                icon:'pi pi-fw pi-clock',
+                to:'/diarioContable'
+             },
+              {
+                  label:'Reporte de Operaciones',
+                  icon:'pi pi-fw pi-file-excel'
+              }
+           ]
+        },
+        {
+           label:'Préstamos',
+           icon:'pi pi-fw pi-dollar',
+           items:[
+               {
+                  label:'Ingresar Préstamo',
+                  icon:'pi pi-fw pi-plus',
+                  to:'/nuevoPrestamo'
+               },
+               {
+                  label:'Abonos de préstamos',
+                  icon:'pi pi-fw pi-money-bill',
+                  to:'/abonos'
+               },
+               {
+                   label:'Reporte de Préstamos por Cobrar',
+                   icon:'pi pi-fw pi-file-excel'
+               }
+           ]
+        },
+        {
+            label:'Inventarios',
+            icon:'pi pi-fw pi-book',
+            items:[
+               {
+                  label:'Producto',
+                  icon:'pi pi-fw pi-globe',
+                  to:'/productos'
+               },
+               {
+                  label:'Reporte de productos',
+                  icon:'pi pi-fw pi-file-pdf'
+               }
+            ]
+         },
+         {
+            label:'Cartera',
+            icon:'pi pi-fw pi-briefcase',
+            items:[
+                {
+                   label:'Clientes',
+                   icon:'pi pi-fw pi-users',
+                   to:'/clientes'
+                },
+                {
+                   label:'Proveedores',
+                   icon:'pi pi-fw pi-users',
+                   to:'/proveedores'
+                },
+                {
+                    label:'Transportistas',
+                    icon:'pi pi-fw pi-directions',
+                    to:'/transportistas'
+                }
+            ]
+         },
+         {
+            label:'Configuración',
+            icon:'pi pi-fw pi-cog',
+            items:[
+                {
+                   label:'Usuarios',
+                   icon:'pi pi-fw pi-users',
+                   to: '/usuarios'
+                },
+                {
+                   label:'Empresas',
+                   icon:'pi pi-fw pi-home',
+                   to: '/empresa'
+                },
+                {
+                    label:'Establecimientos',
+                    icon:'pi pi-fw pi-microsoft',
+                    to: '/establecimientos'
+                },
+                {
+                  label:'Puntos de Emisión',
+                  icon:'pi pi-fw pi-th-large',
+                  to: '/ptosEmision'
+                },
+                {
+                  label:'Firma Digital',
+                  icon:'pi pi-fw pi-key',
+                  to: '/firma'
+                },
+                {
+                  label:'Secuenciales',
+                  icon:'pi pi-fw pi-sort-alpha-down',
+                  to: '/secuenciales'
+                }
+            ]
+         }
+     ];
+
+    const addClass = (element, className) => {
+        if (element.classList)
+            element.classList.add(className);
+        else
+            element.className += ' ' + className;
+    }
+
+    const removeClass = (element, className) => {
+        if (element.classList)
+            element.classList.remove(className);
+        else
+            element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+    }
+
+    const isDesktop = () => {
+        return window.innerWidth > 1024;
+    }
+
+    const isSidebarVisible = () => {
+        if (isDesktop()) {
+            if (layoutMode === 'static')
+                return !staticMenuInactive;
+            else if (layoutMode === 'overlay')
+                return overlayMenuActive;
+            else
+                return true;
+        }
+
+        return true;
+    }
+
+    const logo = layoutColorMode === 'dark' ? 'assets/layout/images/logo-white.svg' : 'assets/layout/images/logo.svg';
+
+    const wrapperClass = classNames('layout-wrapper', {
+        'layout-overlay': layoutMode === 'overlay',
+        'layout-static': layoutMode === 'static',
+        'layout-static-sidebar-inactive': staticMenuInactive && layoutMode === 'static',
+        'layout-overlay-sidebar-active': overlayMenuActive && layoutMode === 'overlay',
+        'layout-mobile-sidebar-active': mobileMenuActive,
+        'p-input-filled': inputStyle === 'filled',
+        'p-ripple-disabled': ripple === false
+    });
+
+    const sidebarClassName = classNames('layout-sidebar', {
+        'layout-sidebar-dark': layoutColorMode === 'dark',
+        'layout-sidebar-light': layoutColorMode === 'light'
+    });
+
+
+    if(!token) {
+        return <Login setToken={setCustomToken} />
+    }
+
     return (
-      <div>
-        <Navbar account={this.state.account} />
-        <div className="container-fluid mt-5">
-          <div className="row">
-            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
-              <div className="content mr-auto ml-auto">
-               
+        <div className={wrapperClass} onClick={onWrapperClick}>
+            <AppTopbar onToggleMenu={onToggleMenu} />
 
-                {content}
+            <CSSTransition classNames="layout-sidebar" timeout={{ enter: 200, exit: 200 }} in={isSidebarVisible()} unmountOnExit>
+                <div ref={sidebar} className={sidebarClassName} onClick={onSidebarClick}>
+                    <div className="layout-logo" style={{cursor: 'pointer'}} onClick={() => history.push('/')}>
+                        <img alt="Logo" src={logo} />
+                    </div>
+                    <AppProfile />
+                    <AppMenu model={menu} onMenuItemClick={onMenuItemClick} />
+                </div>
+            </CSSTransition>
 
-              </div>
-            </main>
-          </div>
-          <div className="row">
-            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
-              <div className="content mr-auto ml-auto">
-               
+            <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange}
+                layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
 
-                {content2}
+            <div className="layout-main">
+                <Route path="/" exact>
+                    <Dashboard title="Inicio"></Dashboard>
+                </Route>
+                <Route path="/formlayout" component={FormLayoutDemo} />
+                <Route path="/input" component={InputDemo} />
+                <Route path="/floatlabel" component={FloatLabelDemo} />
+                <Route path="/invalidstate" component={InvalidStateDemo} />
+                <Route path="/button" component={ButtonDemo} />
+                <Route path="/table" component={TableDemo} />
+                <Route path="/list" component={ListDemo} />
+                <Route path="/tree" component={TreeDemo} />
+                <Route path="/panel" component={PanelDemo} />
+                <Route path="/overlay" component={OverlayDemo} />
+                <Route path="/menu" component={MenuDemo} />
+                <Route path="/messages" component={MessagesDemo} />
+                <Route path="/file" component={FileDemo} />
+                <Route path="/chart" component={ChartDemo} />
+                <Route path="/misc" component={MiscDemo} />
+                <Route path="/display" component={DisplayDemo} />
+                <Route path="/elevation" component={ElevationDemo} />
+                <Route path="/flexbox" component={FlexBoxDemo} />
+                <Route path="/icons" component={IconsDemo} />
+                <Route path="/grid" component={GridDemo} />
+                <Route path="/spacing" component={SpacingDemo} />
+                <Route path="/typography" component={TypographyDemo} />
+                <Route path="/text" component={TextDemo} />
+                <Route path="/calendar" component={Calendar} />
+                <Route path="/timeline" component={TimelineDemo} />
+                <Route path="/crud" component={Crud} />
+                <Route path="/empty" component={EmptyPage} />
+                <Route path="/documentation" component={Documentation} />
+                {/* DOCUMENTOS */}
+             
+            </div>
 
-              </div>
-            </main>
-          </div>
+            <AppFooter />
+
         </div>
-      </div>
     );
-  }
+
 }
 
 export default App;
