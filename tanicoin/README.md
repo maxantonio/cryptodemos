@@ -13,8 +13,7 @@ Iniciar una blockchain de prueba utilizando Ganache
 
 ![alt text](src/assets/img/ganache_new.jpg "Ganache - Nueva blockchain")
 
-Obtener una dirección de alguna de las cuentas de Ganache, 
-excepto la 0 y la 1, sobreescribir la variable "profit_address"
+Obtener la dirección "Index 9" de las cuentas de Ganache, sobreescribir la variable "profit_address"
 en /contracts/TaniCoin.sol
 
 ![alt text](src/assets/img/accounts.jpg "Ganache - Cuentas")
