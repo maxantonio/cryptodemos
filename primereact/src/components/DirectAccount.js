@@ -25,7 +25,11 @@ class DirectAccount extends Component{
             error: '',
             success: false,
             loading: false,
-            privateKeyModal: true
+            privateKeyModal: true,
+            account:{},
+            accountBalance:0,
+            DAIBalance:0,
+
             // toastRef: Toast(),
             // privateKeyModal: false
         };
@@ -38,9 +42,27 @@ class DirectAccount extends Component{
             return;
         } else {
             privateKey = decode(privateKey);
+            this.state.privateKey = privateKey
             console.log(" llave encontrada",privateKey)
         }
 
+        let account = web3.eth.accounts.privateKeyToAccount(privateKey)
+        this.state.account = account
+        this.loadBalances()
+
+
+    }
+    loadBalances(){
+        const d=5777 //temporalmente el network id
+        const _daiToken = DaiToken.networks[d];
+        let account = this.state.account
+        console.log("CURRENT ACCOUNT",account)
+        web3.eth.getBalance(account.address).then(a=>this.setBalance(a))
+        let daiToken = new web3.eth.Contract(
+            DaiToken.abi,
+            _daiToken.address,
+        );
+        daiToken.methods.balanceOf(account.address).call().then(a =>this.setDaiBalance(a))
     }
     showText(text,severity=false){
         if(!severity){
@@ -52,6 +74,17 @@ class DirectAccount extends Component{
     }
     loading(){
         this.showText("Una transaccion puede tomar varios segundos, por favor sea paciente ","info" )
+    }
+
+    setDaiBalance(p){
+        console.log("dai balance ",p)
+        let value = web3.utils.fromWei(p, 'ether')+" DAI";
+        this.setState({DAIBalance:value});
+    }
+    setBalance(p){
+        console.log("setting balance",p)
+        let value = web3.utils.fromWei(p, 'ether')+" ETH";
+        this.setState({accountBalance:value});
     }
     success(){
         this.showText("Su transaccion se completo satisfactoriamente ","info" )
@@ -83,62 +116,31 @@ class DirectAccount extends Component{
 
     onSubmit = async event => {
         event.preventDefault();
-        console.log("que bonito que bonito")
         this.setState({ success: false });
 
         if (!this.validateInput()) {
-            this.setState({ error: 'Please enter correct data!' });
             return;
         }
-
-        let privateKey = sessionStorage.getItem('pkencoded');
-
-        if (!privateKey) {
-            this.setState({ privateKeyModal: false });
-            return;
-        } else {
-            privateKey = decode(privateKey);
-        }
-        // privateKey = '484e50a11c2fb47f14304e656ee1398711252ea60053d2f87cf67554f38ffff6';
-        // let dai_address = '0x1C4A24AE203CE4424b79160490C758968f6f3e88'
-
-        console.log('original','89a76bc75936a45459abb621c36bf21c5902e5eb93732d78faf4bc4eaf032ba9')
-        console.log('guardado',privateKey)
-        console.log()
-        this.setState({ error: '', loading: true });
-
+        let privateKey = this.state.privateKey;
         let {value, recipient } = this.state;
-        console.log(value,recipient);
         value = web3.utils.toWei(value, 'ether');
-
         const d=5777 //temporalmente el network id
-
         const _daiToken = DaiToken.networks[d];
-        console.log("DAITOKEN ADDRESS",_daiToken.address)
-        console.log("GANACHE ADDRESS",'0x8dC06Ca572cDeC33f0bc0c6c65BA8897B0E488a1')
         let daiToken = new web3.eth.Contract(
             DaiToken.abi,
             _daiToken.address,
-            // '0x8dC06Ca572cDeC33f0bc0c6c65BA8897B0E488a1'
         );
 
         try {
             const makeRequest = await daiToken.methods.transfer(recipient, value);
-
             const options = {
                 to: makeRequest._parent._address,
-                // to: _daiToken.address,
                 data: makeRequest.encodeABI(),
                 gas: '1000000'
             };
-            console.log("haciendolo ??")
             await signAndSendTransaction(options, privateKey);
-            console.log(
-                "Termino ???"
-
-            )
             this.setState({ success: true,recipient:'',value:'' });
-
+            this.loadBalances()
 
         } catch (error) {
             console.log("error ? :( ")
@@ -164,7 +166,11 @@ class DirectAccount extends Component{
             )
         }else{
             privateKey = (
-                <Button onClick={this.removeCurrentKey}>Eliminar llave privada actual</Button>
+                <div className="col-12">
+                    <Button onClick={this.removeCurrentKey}>Eliminar llave privada actual</Button>
+                    <label htmlFor="" className="ml-3">Current Balance:</label> <span className="p2" > {this.state.accountBalance}</span>
+                    <label htmlFor="" className="ml-3">Dai Balance:</label> <span className="p2" > {this.state.DAIBalance}</span>
+                </div>
             )
         }
         let alert = "";
@@ -188,7 +194,7 @@ class DirectAccount extends Component{
 
 
                                     <label>Cantidad</label>
-                                    <InputText value={this.state.value} label="ether" labelPosition="right" onChange={event => this.setState({ value: event.target.value })} />
+                                    <InputText value={this.state.value} label="ether"  onChange={event => this.setState({ value: event.target.value })} />
 
                                     <label className="ml-5">Direccion</label>
                                     <InputText value={this.state.recipient} onChange={event => this.setState({ recipient: event.target.value })} className="ml-2 col-8" />
