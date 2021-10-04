@@ -8,7 +8,7 @@ import { Calendar as PRCalendar } from 'primereact/calendar';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { EventService } from '../service/EventService';
+import { EventService } from '../services/EventService';
 
 export const Calendar = () => {
 

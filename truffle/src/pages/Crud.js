@@ -12,7 +12,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { ProductService } from '../service/ProductService';
+// import { ProductService } from '../service/ProductService';
 
 export const Crud = () => {
 
@@ -40,8 +40,8 @@ export const Crud = () => {
     const dt = useRef(null);
 
     useEffect(() => {
-        const productService = new ProductService();
-        productService.getProducts().then(data => setProducts(data));
+        // const productService = new ProductService();
+        // productService.getProducts().then(data => setProducts(data));
     }, []);
 
     const formatCurrency = (value) => {

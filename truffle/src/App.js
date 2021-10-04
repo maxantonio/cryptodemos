@@ -33,30 +33,16 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import 'prismjs/themes/prism-coy.css';
-import '@fullcalendar/core/main.css';
-import '@fullcalendar/daygrid/main.css';
-import '@fullcalendar/timegrid/main.css';
+// import '@fullcalendar/core/main.css';
+// import '@fullcalendar/daygrid/main.css';
+// import '@fullcalendar/timegrid/main.css';
 import './layout/flags/flags.css';
 import './layout/layout.scss';
 import './App.scss';
-import UsuariosData from './components/Configuracion/UsuariosData';
-import Empresas from './components/Configuracion/Empresas';
-import EstablecimientosData from './components/Configuracion/EstablecimientosData';
-import PuntosEmisionsData from './components/Configuracion/PuntosEmisionData';
+
 
 import Login from './components/Login'
 
-import ClientesData from './components/Cartera/ClientesData';
-import ProveedorsData from './components/Cartera/ProveedoresData';
-import TransportistasData from './components/Cartera/Transportistas';
-import ProductosData from './components/Inventario/ProductoData';
-import PrestamoData from './components/Prestamos/PrestamosData';
-import AbonosData from './components/Prestamos/AbonosData';
-import CuentasData from './components/Banca/CuentasData';
-import DiarioContablesData from './components/Banca/DiarioContableData';
-import HistorialFacturasData from './components/Documentos/HistorialFacturaData';
-import OperacionesData from './components/Banca/OperacionesData';
-import FacturasData from './components/Abonos/FacturasData';
 
 function setToken(userToken) {
     console.log("saving token on session storage",userToken)

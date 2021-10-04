@@ -31,7 +31,7 @@ contract('TaniCoin', (accounts) => {
             await taniCoin.approve(accounts[0], tokens('100'));
             await taniCoin.transferFrom(accounts[0], accounts[1], tokens('100'));
             let send_balance = await taniCoin.balanceOf(accounts[1]);
-            let profit_balance = await taniCoin.balanceOf(accounts[9]);
+            let profit_balance = await taniCoin.balanceOf(accounts[3]);
             assert.equal(send_balance.toString(), tokens('95'));
             assert.equal(profit_balance.toString(), tokens('5'));
         });
