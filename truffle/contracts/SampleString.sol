@@ -9,12 +9,12 @@ contract SampleString{   //declarando el contrato con su nombre
     //funcion que devuelve el valor almacenado en la propiedad 
     //la declaracion 'view' es porque es una funcion que no altera los valores de las propiedades del contrato,
     // la declaracion 'returns(string)' es para especificar que la funcion retorna un dato de tipo string, si no se especifica la funcion no retorna informacion
-    function get() public view returns(string){  
+    function get() public view returns(string memory){
         return value;   //
     }
 
     //funcion que cambia el valor guardado en el contrato de la propiedad value
-    function set(string _value) public {
+    function set(string memory _value) public {
         value = _value;
     }
 
