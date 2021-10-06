@@ -23,6 +23,7 @@ import './App.scss';
 import {Dashboard} from "./components/ListDemo";
 import {Account} from "./components/Account";
 import DirectAccount from "./components/DirectAccount";
+import GetSetText from "./components/GetSetText";
 import {Dai} from "./components/Dai";
 import { Route, useHistory } from 'react-router-dom';
 import { AppMenu } from './AppMenu';
@@ -106,8 +107,9 @@ const App = () =>  {
                     to:'/DirectAccount'
                 },
                 {
-                    label:'Agregar Tokens',
-                    icon:'pi pi-fw pi-file'
+                    label:'Get Set Text',
+                    icon:'pi pi-fw pi-file',
+                    to:'/GetSetText'
                 },
                 {
                     label:'Cambiar LLave privada',
@@ -192,6 +194,7 @@ const App = () =>  {
                     </Route>
 
                     <Route path="/DirectAccount" component={DirectAccount} />
+                    <Route path="/GetSetText" component={GetSetText} />
                     <Route path="/Account" component={Account} />
 
                     {/*<Route path="/samplepath">*/}
