@@ -15,7 +15,7 @@ contract Voting{
     mapping (address => bool) public voter;  //listado de direcciones que han votado
     
     //agregamos los candidatos en el constructor 
-    constructor() {
+    constructor() public{
         addCandidate("Bidden");//   candidato 1
         addCandidate("Trump");//    candidato 2
     }

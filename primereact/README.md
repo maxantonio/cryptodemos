@@ -39,3 +39,11 @@ Una vez corriendo la aplicacion tiene dos menus principales para acceder a las o
 la llave de la cuenta que creo los contratos la primera vez y luego puede usarse cualquier llave privada cuya cuenta ya posea tokens 
 
 
+
+contrato SampleString direccion en testnet
+0xBf1f301d2659aCf62c4a89fFD3Be4275300518f0
+llave publica dueño
+0x24a20013c83AaC9c6aB4e27D06b13D116c05c0b4
+llave privada dueño
+5a4b6beffe092d3c90682ef3f43a5a8e5702f1422de98e05bd91f38bcb570366
+

@@ -7,7 +7,7 @@ import { Button } from 'primereact/button';
 import web3 from "../ethereum/web3";
 import Campaign from "../ethereum/campaign-contract";
 
-import {signAndSendTransaction} from '../ethereum/helpers/index';
+import {signAndSendTransaction,signAndSendTransactionProvider} from '../ethereum/helpers/index';
 import {DataView} from "primereact/dataview";
 
 class GetSetText extends Component{
@@ -30,7 +30,7 @@ class GetSetText extends Component{
             account:{},
             accountBalance:0,
             DAIBalance:0,
-
+            network:97 // networkid del testnet de binance
             // toastRef: Toast(),
             // privateKeyModal: false
         };
@@ -55,14 +55,38 @@ class GetSetText extends Component{
 
     }
     loadBalances(){
-        const d=5777 //temporalmente el network id
-        const _sampleString = SampleString.networks[d];
-        let sampleString = new web3.eth.Contract(
-            SampleString.abi,
-            _sampleString.address,
-        );
-        sampleString.methods.set("en caliente").call().then(a =>console.log(a))
-        sampleString.methods.get().call().then(a =>this.setCurrentValue(a))
+        const that = this;
+        if (window.ethereum) {
+
+            console.log("HAY ETHEREUM",window.ethereum)
+            window.web3 = new Web3(window.ethereum);
+            window.ethereum.enable();
+            const web3 = window.web3;
+            web3.eth.net.getId().then(function(d) {
+                console.log(d, "DDD")
+            });
+
+        }else{
+            console.log("no hay ethereum")
+            window.web3 = new Web3(`https://data-seed-prebsc-1-s1.binance.org:8545`);
+            const web3 = window.web3;
+            web3.eth.net.getId().then(function(d) {
+                console.log(d, "DDD")
+                console.log("NETWORK ID USADO en balance",d)
+
+                const _sampleString = SampleString.networks[d];
+                var Contract = require('web3-eth-contract');
+                // Contract.setProvider('https://data-seed-prebsc-1-s1.binance.org:8545');
+                let sampleString = new Contract( SampleString.abi,_sampleString.address);
+                sampleString.setProvider('https://data-seed-prebsc-1-s1.binance.org:8545')
+                var get = sampleString.methods.get()
+                get.call().then(function(a){
+                    that.setCurrentValue(a)
+                });
+            });
+        }
+        // const d=5777 //temporalmente el network id
+
     }
     showText(text,severity=false){
         if(!severity){
@@ -111,13 +135,13 @@ class GetSetText extends Component{
 
         let privateKey = this.state.privateKey;
 
-        const d=5777 //temporalmente el network id
-        const _sampleString = SampleString.networks[d];
+        console.log("NETWORK ID USADO",this.state.network)
+        const _sampleString = SampleString.networks[this.state.network];
         let sampleString = new web3.eth.Contract(
             SampleString.abi,
             _sampleString.address,
         );
-
+        sampleString.setProvider('https://data-seed-prebsc-1-s1.binance.org:8545')
         try {
             const makeRequest = await sampleString.methods.set(this.state.value);
             const options = {
@@ -125,7 +149,10 @@ class GetSetText extends Component{
                 data: makeRequest.encodeABI(),
                 gas: '1000000'
             };
-            await signAndSendTransaction(options, privateKey);
+            console.log("estado until here")
+            // await signAndSendTransaction(options, privateKey);
+            await signAndSendTransactionProvider(options, privateKey,'https://data-seed-prebsc-1-s1.binance.org:8545');
+
             this.setState({ success: true,recipient:'',value:'' });
             this.loadBalances()
 
