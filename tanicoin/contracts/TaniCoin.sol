@@ -1,8 +1,8 @@
 pragma solidity >=0.4.25 <0.7.0;
 
 contract TaniCoin {
-    string  public name = "Tani Coin";
-    string  public symbol = "TANI";
+    string  public name = "Tani Coin";    //nombre del token
+    string  public symbol = "TANI";       // symbolo del token (recomendable 3 caracteres)
     uint256 public totalSupply = 1000000000000000000000000; // 1 million tokens
     uint8   public decimals = 18;
     address payable public profit_address = 0x7044d86823f3317C1f5b829575D20986427Eb298;

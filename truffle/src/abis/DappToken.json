@@ -5191,12 +5191,13 @@
         }
       },
       "links": {},
-      "address": "0x6a16cbEf681757B38856908Aa2F6F033cFA907A3",
-      "transactionHash": "0x38d45adadde533e10280726183115826066cdb173355f30d03acc9678437e14a"
+      "address": "0x379a118548190230FE72EeA55DD5c5e6bc7F06a4",
+      "transactionHash": "0x24dba9c0b8b7e6e14fb47e227f41ffcd6160a2308b67faa0212440b22c33a988"
     }
   },
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-06-23T16:36:54.003Z",
+  "updatedAt": "2021-10-04T20:50:08.548Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },

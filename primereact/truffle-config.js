@@ -7,7 +7,7 @@ module.exports = {
     // You can also follow this format for other networks;
     // see <http://truffleframework.com/docs/advanced/configuration>
     // for more details on how to specify configuration options!
-
+    contracts_directory:'./contracts',
     networks: {
         development: {
             host: "127.0.0.1",
@@ -22,10 +22,20 @@ module.exports = {
         testnet: {
             provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545`),
             network_id: 97,
-            confirmations: 10,
-            timeoutBlocks: 200,
+            confirmations: 6,
+            timeoutBlocks: 400,
             skipDryRun: true
         },
+    },
+    compilers: {
+        solc: {
+          version: "0.8.9",
+        },
+      },
+      console: {
+        require: [
+          { path: "./src/abis/ArtToken.json" },
+        ]
     },
     contracts_build_directory: './src/abis/',
 

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="144093ec-56dd-43d7-83e3-57f4fc27e8ee" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tanicoin/contracts/TaniCoin.sol" beforeDir="false" afterPath="$PROJECT_DIR$/tanicoin/contracts/TaniCoin.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle/src/abis/ComisionedToken.json" beforeDir="false" afterPath="$PROJECT_DIR$/truffle/src/abis/ComisionedToken.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle/src/abis/ConvertLib.json" beforeDir="false" afterPath="$PROJECT_DIR$/truffle/src/abis/ConvertLib.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle/src/abis/CustomCoin.json" beforeDir="false" afterPath="$PROJECT_DIR$/truffle/src/abis/CustomCoin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle/src/abis/DaiToken.json" beforeDir="false" afterPath="$PROJECT_DIR$/truffle/src/abis/DaiToken.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle/src/abis/DappToken.json" beforeDir="false" afterPath="$PROJECT_DIR$/truffle/src/abis/DappToken.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle/src/abis/MetaCoin.json" beforeDir="false" afterPath="$PROJECT_DIR$/truffle/src/abis/MetaCoin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle/src/abis/Migrations.json" beforeDir="false" afterPath="$PROJECT_DIR$/truffle/src/abis/Migrations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/truffle/src/abis/TokenFarm.json" beforeDir="false" afterPath="$PROJECT_DIR$/truffle/src/abis/TokenFarm.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/primereact" />
+  </component>
+  <component name="ProjectId" id="1xsEzSeXPqvpyDEWBz4OgZr0WuH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/primereact/migrations" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/primereact/migrations" />
+      <recent name="$PROJECT_DIR$/primereact/src/components" />
+      <recent name="$PROJECT_DIR$/primereact/contracts" />
+      <recent name="$PROJECT_DIR$/truffle/test" />
+      <recent name="$PROJECT_DIR$/primereact/public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/primereact/old_migrations" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="144093ec-56dd-43d7-83e3-57f4fc27e8ee" name="Default Changelist" comment="" />
+      <created>1631135657941</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1631135657941</updated>
+      <workItem from="1631135659798" duration="11423000" />
+      <workItem from="1631216311547" duration="4365000" />
+      <workItem from="1631560782705" duration="2871000" />
+      <workItem from="1631642167576" duration="22000" />
+      <workItem from="1631711818202" duration="4059000" />
+      <workItem from="1631728447610" duration="3312000" />
+      <workItem from="1631822969396" duration="35000" />
+      <workItem from="1632243844765" duration="13856000" />
+      <workItem from="1632337098853" duration="4164000" />
+      <workItem from="1633367290560" duration="1733000" />
+      <workItem from="1633376365908" duration="3871000" />
+      <workItem from="1633383503569" duration="938000" />
+      <workItem from="1633443810923" duration="94000" />
+      <workItem from="1633446637633" duration="3468000" />
+      <workItem from="1633698099987" duration="603000" />
+      <workItem from="1633708420008" duration="6454000" />
+      <workItem from="1633725239682" duration="1727000" />
+      <workItem from="1633966650643" duration="932000" />
+      <workItem from="1634844718826" duration="384000" />
+    </task>
+    <task id="LOCAL-00001" summary="Proyecto usando layouts y componentes de primereact para poder integrar todas las pruebas">
+      <created>1632262303365</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1632262303365</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Proyecto usando layouts y componentes de primereact para poder integrar todas las pruebas">
+      <created>1632262544526</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1632262544526</updated>
+    </task>
+    <task id="LOCAL-00003" summary="updating direct account">
+      <created>1632348929041</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1632348929041</updated>
+    </task>
+    <task id="LOCAL-00004" summary="updating">
+      <created>1633367498968</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1633367498969</updated>
+    </task>
+    <task id="LOCAL-00005" summary="comentando dapptoken">
+      <created>1633369024081</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1633369024081</updated>
+    </task>
+    <task id="LOCAL-00006" summary="creando contrato ejemplo SampleString.sol">
+      <created>1633379507030</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1633379507030</updated>
+    </task>
+    <task id="LOCAL-00007" summary="comentando el contrato">
+      <created>1633379895674</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1633379895674</updated>
+    </task>
+    <task id="LOCAL-00008" summary="agregando despliegue y test de SampleString.sol">
+      <created>1633381802598</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1633381802598</updated>
+    </task>
+    <task id="LOCAL-00009" summary="agregando GUI test de SampleString.sol">
+      <created>1633537069515</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1633537069515</updated>
+    </task>
+    <task id="LOCAL-00010" summary="agregando Contrato de votacion">
+      <created>1633698226497</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1633698226497</updated>
+    </task>
+    <task id="LOCAL-00011" summary="agregando Contrato de votacion">
+      <created>1633700205013</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1633700205013</updated>
+    </task>
+    <task id="LOCAL-00012" summary="conectando visual con contrato en testnet">
+      <created>1633720851132</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1633720851132</updated>
+    </task>
+    <task id="LOCAL-00013" summary="publics">
+      <created>1633725384356</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1633725384357</updated>
+    </task>
+    <task id="LOCAL-00014" summary="subiendo abis">
+      <created>1633725715371</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1633725715371</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Proyecto usando layouts y componentes de primereact para poder integrar todas las pruebas" />
+    <MESSAGE value="updating direct account" />
+    <MESSAGE value="updating" />
+    <MESSAGE value="comentando dapptoken" />
+    <MESSAGE value="creando contrato ejemplo SampleString.sol" />
+    <MESSAGE value="comentando el contrato" />
+    <MESSAGE value="agregando despliegue y test de SampleString.sol" />
+    <MESSAGE value="agregando GUI test de SampleString.sol" />
+    <MESSAGE value="agregando Contrato de votacion" />
+    <MESSAGE value="conectando visual con contrato en testnet" />
+    <MESSAGE value="publics" />
+    <MESSAGE value="subiendo abis" />
+    <option name="LAST_COMMIT_MESSAGE" value="subiendo abis" />
+  </component>
+</project>
