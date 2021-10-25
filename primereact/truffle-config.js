@@ -25,18 +25,21 @@ module.exports = {
             confirmations: 6,
             timeoutBlocks: 400,
             skipDryRun: true
-        },
+        },mainnet: {
+          provider: () => new HDWalletProvider(mnemonic, `https://mainnet.infura.io/v3/2fc8426062744d85957f8f3e5170c436`),
+          network_id: 1,
+      },
     },
     compilers: {
         solc: {
           version: "0.8.9",
         },
       },
-      console: {
-        require: [
-          { path: "./src/abis/ArtToken.json" },
-        ]
-    },
+    //   console: {
+    //     require: [
+    //       { path: "./src/abis/ArtToken.json" },
+    //     ]
+    // },
     contracts_build_directory: './src/abis/',
 
 };
